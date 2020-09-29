@@ -7,3 +7,9 @@
 ![alt text](https://i.ibb.co/RCcM0wD/Player-Torrent.png)
 
 
+ Использовать:
+ Запустите приложение и выберите файл "Открыть видео" или .torrent "Открыть torrent"
+ 
+
+
+
