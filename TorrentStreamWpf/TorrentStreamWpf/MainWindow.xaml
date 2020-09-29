@@ -1,0 +1,142 @@
+﻿<Window x:Class="TorrentStreamWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TorrentStreamWpf"
+        xmlns:vlc="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
+        xmlns:vlc2="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
+        mc:Ignorable="d"
+        MouseMove = "OnMouseMove" MouseLeave = "OnMouseLeave" 
+        KeyDown="OnKeyDownHandler"
+        Title="Onlayner Player" Height="500" Width="800" WindowStartupLocation="CenterScreen" Background="Black">
+    
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <Border BorderThickness="0">
+           
+            <Grid Margin="0,0,0,10" >
+          
+                <Grid.Background>
+                    <SolidColorBrush Color="Black" Opacity="1"/>
+                </Grid.Background>
+
+                <Grid.RowDefinitions>
+                 <RowDefinition Height="20" ></RowDefinition>
+                 <RowDefinition Height="2*" ></RowDefinition>
+                <RowDefinition  Height="25" ></RowDefinition>
+                <RowDefinition  Height="35" ></RowDefinition>
+           </Grid.RowDefinitions>
+           <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+           </Grid.ColumnDefinitions>
+
+                <Menu x:Name="Menu" Height="25" Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="3" VerticalAlignment="Top">
+                    <MenuItem Header="Файл">
+                        <MenuItem Header="Открыть видео" Click="Files_Click"></MenuItem>
+                        <MenuItem Header="Открыть torrent" Click="Files_Torrent">
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Header="Exit" Click="Exit_Clicked"></MenuItem>
+                    </MenuItem>
+                   <!-- <MenuItem Header="Edit" ></MenuItem>
+                    <MenuItem Header="View" ></MenuItem>-->
+                </Menu>
+                
+
+                <vlc:VideoView x:Name="VideoView" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3">
+                    <TextBlock x:Name="InfoTextSource" Text="{Binding InfoText, UpdateSourceTrigger=PropertyChanged}" Foreground="White" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                </vlc:VideoView>
+
+
+                <Border x:Name="BorderSlider"   Grid.Row="2" Grid.Column="0" Background="#FFF0EFEF" Grid.ColumnSpan="3" Padding="0" />
+                <Slider x:Name="SliderVlc"    IsMoveToPointEnabled="True"  Value="{Binding SliderValue, UpdateSourceTrigger=PropertyChanged}" Orientation="Horizontal" Grid.Column="0" Grid.Row="2" Height="Auto"  Minimum="0"  Maximum="10"  IsSnapToTickEnabled="False" TickFrequency="1" Grid.ColumnSpan="3" Margin="5,0" VerticalAlignment="Center"  ValueChanged="Slider_ValueChanged"  />
+
+                <Border x:Name="BorderButton" Grid.Row="3" Grid.Column="0" Background="#FFF0EFEF" Grid.ColumnSpan="3"  />
+
+                <Grid Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" Margin="10,0,0,0" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="37"></ColumnDefinition>
+                        <ColumnDefinition Width="37"></ColumnDefinition>
+                        <ColumnDefinition Width="37"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="ButtonPlay" Height="30"  Width="30" Grid.Column="0"  Grid.Row="0" Padding="0" BorderThickness="0" HorizontalAlignment="Center" Click="Play_Clicked">
+                        <Button.Background>
+                            <SolidColorBrush Color="Gray" Opacity="0.0" />
+                        </Button.Background>
+                        <StackPanel Height="20"  Width="20" >
+                            <Image  x:Name="PlayImg"   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="ButtonPause" Height="30"  Width="30" Grid.Column="1"  Grid.Row="0" Padding="0" BorderThickness="0" HorizontalAlignment="Center" Margin="5,0,0,0" Click="Pause_Clicked">
+                        <Button.Background>
+                            <SolidColorBrush Color="Gray" Opacity="0.0" />
+                        </Button.Background>
+                        <StackPanel Height="20"  Width="20" >
+                            <Image  x:Name="PauseImg" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="ButtonStop" Height="30"  Width="30" Grid.Column="2"  Grid.Row="0" Padding="0" BorderThickness="0" HorizontalAlignment="Center" Margin="5,0,0,0" Click="Stop_Clicked">
+                        <Button.Background>
+                            <SolidColorBrush Color="Gray" Opacity="0.0" />
+                        </Button.Background>
+                        <StackPanel Height="20"  Width="20" >
+                            <Image  x:Name="StopImg" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                </Grid>
+
+
+                <Grid Grid.Column="2" Grid.Row="3" HorizontalAlignment="Right" Margin="10,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"></ColumnDefinition>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+
+                    </Grid.ColumnDefinitions>
+
+
+                    <Button x:Name="ButtonFullScreen" Height="30"  Width="30" Grid.Column="1"  Grid.Row="0" Padding="0" BorderThickness="0" HorizontalAlignment="Right" Margin="5,0,0,0" VerticalAlignment="Center" Click="FullScreen_Clicked">
+                        <Button.Background>
+                            <SolidColorBrush Color="Gray" Opacity="0.0" />
+                        </Button.Background>
+                        <StackPanel Height="20"  Width="20" >
+                            <Image x:Name="FullScreen"  HorizontalAlignment="Right" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    <Slider x:Name="SlederVolume"  Value="{Binding SliderVolumeValue, UpdateSourceTrigger=PropertyChanged}" Orientation="Horizontal" Grid.Column="0" Grid.Row="0" Width="90" Height="Auto"  Minimum="0"  Maximum="100" IsSnapToTickEnabled="False" TickFrequency="1" Grid.ColumnSpan="3" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" ValueChanged="SliderVolume_ValueChanged" />
+                </Grid>
+                
+
+           
+
+
+        </Grid>
+
+
+        </Border>
+
+
+    </Grid>
+
+   
+</Window> 
+
+
